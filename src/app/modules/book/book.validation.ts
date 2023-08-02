@@ -6,6 +6,8 @@ const createBookZodSchema = z.object({
     author: z.string(),
     genre: z.string(),
     publicationDate: z.date(),
+    reviewStar: z.number().optional(),
+    reviewComment: z.string().optional(),
   }),
 })
 
@@ -15,6 +17,8 @@ const updateBookZodSchema = z.object({
     author: z.string().optional(),
     genre: z.string().optional(),
     publicationDate: z.date().optional(),
+    reviewStar: z.number().optional(),
+    reviewComment: z.string().optional(),
   }),
 })
 

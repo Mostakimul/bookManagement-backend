@@ -23,7 +23,11 @@ const auth =
       req.user = verifiedUser
 
       // guard using role
-      if (requiredRoles.length && !requiredRoles.includes(verifiedUser.role)) {
+      if (
+        requiredRoles.length &&
+        !requiredRoles.includes(verifiedUser.role) &&
+        !(req.body.userId === verifiedUser.id)
+      ) {
         throw new ApiError(httpStatus.FORBIDDEN, 'Unauthorized access!')
       }
 

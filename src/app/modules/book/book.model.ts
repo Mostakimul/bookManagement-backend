@@ -16,7 +16,12 @@ const bookSchema = new Schema<BookType>(
       required: true,
     },
     publicationDate: {
-      type: Date,
+      type: String,
+      required: true,
+    },
+    userId: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
       required: true,
     },
   },
@@ -28,4 +33,4 @@ const bookSchema = new Schema<BookType>(
   }
 )
 
-export const Cow = model<BookType, BookModel>('Book', bookSchema)
+export const Book = model<BookType, BookModel>('Book', bookSchema)
