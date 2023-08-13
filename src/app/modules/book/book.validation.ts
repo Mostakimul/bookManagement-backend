@@ -5,7 +5,7 @@ const createBookZodSchema = z.object({
     title: z.string(),
     author: z.string(),
     genre: z.string(),
-    publicationDate: z.date(),
+    publicationDate: z.string(),
     userId: z.string(),
   }),
 })
@@ -15,7 +15,7 @@ const updateBookZodSchema = z.object({
     title: z.string().optional(),
     author: z.string().optional(),
     genre: z.string().optional(),
-    publicationDate: z.date().optional(),
+    publicationDate: z.string().optional(),
     userId: z.string().optional(),
   }),
 })

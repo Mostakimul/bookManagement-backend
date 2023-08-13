@@ -18,9 +18,8 @@ const createUser = async (user: UserType): Promise<UserType | null> => {
   if (!user.role) {
     user.role = 'user'
   }
-
   const isUserExist = await User.isUserExist(user.email)
-  if (isUserExist.email) {
+  if (isUserExist) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Email already used!')
   }
 
