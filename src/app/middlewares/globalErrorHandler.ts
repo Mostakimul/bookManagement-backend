@@ -37,7 +37,6 @@ const globalErrorHandler: ErrorRequestHandler = (
     message = simplifiedError.message
     errorMessages = simplifiedError.errorMessages
   } else if (error instanceof ApiError) {
-    console.log('Step global')
     statusCode = error?.statusCode
     message = error?.message
     errorMessages = error?.message
