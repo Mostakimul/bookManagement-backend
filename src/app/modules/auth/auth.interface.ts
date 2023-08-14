@@ -4,6 +4,7 @@ export type LoginUserType = {
 }
 
 export type LoginResponseType = {
+  email: string
   accessToken: string
   refreshToken?: string
 }

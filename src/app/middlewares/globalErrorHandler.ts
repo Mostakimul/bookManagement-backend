@@ -1,6 +1,7 @@
-/* eslint-disable no-unused-expressions */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-console */
-import { ErrorRequestHandler } from 'express'
+/* eslint-disable no-unused-expressions */
+import { ErrorRequestHandler, NextFunction, Request, Response } from 'express'
 import { ZodError } from 'zod'
 import config from '../../config'
 import ApiError from '../../errors/ApiErrors'
@@ -11,8 +12,13 @@ import { IGenericErrorResponse } from '../../interfaces/common'
 import { IGenericErrorMessage } from '../../interfaces/error'
 
 // global error handler
-const globalErrorHandler: ErrorRequestHandler = (error, _, res) => {
-  config.env == 'development'
+const globalErrorHandler: ErrorRequestHandler = (
+  error,
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  config.env === 'development'
     ? console.log('globalErrorHandler ~ ', error)
     : console.error('globalErrorHandler ~ ', error)
 
@@ -31,6 +37,7 @@ const globalErrorHandler: ErrorRequestHandler = (error, _, res) => {
     message = simplifiedError.message
     errorMessages = simplifiedError.errorMessages
   } else if (error instanceof ApiError) {
+    console.log('Step global')
     statusCode = error?.statusCode
     message = error?.message
     errorMessages = error?.message

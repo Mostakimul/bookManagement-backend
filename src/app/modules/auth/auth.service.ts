@@ -69,6 +69,7 @@ const loginUser = async (
   )
 
   return {
+    email: userEmail,
     accessToken,
     refreshToken,
   }
