@@ -13,6 +13,6 @@ router.post(
   auth(ENUM_USER_ROLE.USER),
   ReviewController.createReview
 )
-router.get('/', ReviewController.getAllReviews)
+router.get('/:id', ReviewController.getAllReviews)
 
-export const BookRoutes = router
+export const ReviewRoutes = router

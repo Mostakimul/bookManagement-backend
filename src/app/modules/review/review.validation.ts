@@ -2,8 +2,8 @@ import { z } from 'zod'
 
 const createReviewZodSchema = z.object({
   body: z.object({
-    reviewStar: z.number().optional(),
-    reviewComment: z.string().optional(),
+    star: z.number(),
+    comment: z.string(),
     userId: z.string(),
     bookId: z.string(),
   }),
@@ -11,8 +11,8 @@ const createReviewZodSchema = z.object({
 
 const updateReviewZodSchema = z.object({
   body: z.object({
-    reviewStar: z.number().optional(),
-    reviewComment: z.string().optional(),
+    star: z.number().optional(),
+    comment: z.string().optional(),
     userId: z.string().optional(),
     bookId: z.string().optional(),
   }),

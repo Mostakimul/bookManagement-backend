@@ -30,4 +30,4 @@ const reviewSchema = new Schema<ReviewType>(
   }
 )
 
-export const Review = model<ReviewType, ReviewModel>('Book', reviewSchema)
+export const Review = model<ReviewType, ReviewModel>('Review', reviewSchema)
