@@ -1,5 +1,6 @@
 import httpStatus from 'http-status'
 import { Secret } from 'jsonwebtoken'
+import mongoose from 'mongoose'
 import config from '../../../config'
 import ApiError from '../../../errors/ApiErrors'
 import { jwtHelpers } from '../../../helpers/jwtHelpers'
@@ -9,12 +10,15 @@ import {
   LoginResponseType,
   LoginUserType,
   RefreshTokenResponseType,
+  RegistrationResponseType,
 } from './auth.interface'
 
 /**
  * Create user service
  */
-const createUser = async (user: UserType): Promise<UserType | null> => {
+const createUser = async (
+  user: UserType
+): Promise<RegistrationResponseType> => {
   if (!user.role) {
     user.role = 'user'
   }
@@ -23,13 +27,55 @@ const createUser = async (user: UserType): Promise<UserType | null> => {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Email already used!')
   }
 
-  const newUser = await User.create(user)
+  // generate student id
+  let newUserData = null
+  let accessToken = null
+  let refreshToken = null
 
-  if (!newUser) {
-    throw new ApiError(httpStatus.BAD_REQUEST, 'Failed to create user!')
+  const session = await mongoose.startSession()
+  try {
+    session.startTransaction()
+
+    const newUser = await User.create([user], { session })
+
+    if (!newUser.length) {
+      throw new ApiError(httpStatus.BAD_REQUEST, 'Failed to create user!')
+    }
+
+    const tokenOptionsValues = {
+      id: newUser[0]._id,
+      userEmail: user.email,
+      role: newUser[0].role,
+    }
+
+    // create JWT token & refresh token
+    accessToken = jwtHelpers.createToken(
+      tokenOptionsValues,
+      config.jwt.secret as Secret,
+      config.jwt.expires_in as string
+    )
+
+    refreshToken = jwtHelpers.createToken(
+      tokenOptionsValues,
+      config.jwt.refresh_secret as Secret,
+      config.jwt.refresh_expires_in as string
+    )
+
+    newUserData = newUser[0]
+
+    await session.commitTransaction()
+    await session.endSession()
+  } catch (error) {
+    await session.abortTransaction()
+    await session.endSession()
+    throw error
   }
 
-  return newUser
+  return {
+    user: newUserData,
+    accessToken,
+    refreshToken,
+  }
 }
 
 /**
