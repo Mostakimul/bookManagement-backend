@@ -15,7 +15,7 @@ const auth =
       const token = req.headers.authorization
 
       if (!token) {
-        throw new ApiError(httpStatus.UNAUTHORIZED, 'Unauthorized access!')
+        throw new ApiError(httpStatus.UNAUTHORIZED, 'No access token!')
       }
 
       //  verify token
