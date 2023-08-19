@@ -7,7 +7,7 @@ import { BookValidation } from './book.validation'
 
 const router = express.Router()
 
-router.delete('/id', auth(ENUM_USER_ROLE.USER), BookController.deleteBook)
+router.delete('/:id', auth(ENUM_USER_ROLE.USER), BookController.deleteBook)
 router.post(
   '/',
   auth(ENUM_USER_ROLE.USER),

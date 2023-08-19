@@ -7,6 +7,7 @@ import {
   GenericResponseType,
   PaginationOptionsType,
 } from '../../../interfaces/common'
+import { Review } from '../review/review.model'
 import { BOOKS_SEARCHABLE } from './book.constant'
 import { BookType, BookTypeFilters } from './book.interface'
 import { Book } from './book.model'
@@ -110,6 +111,8 @@ const updateBook = async (
  * Delete book service
  */
 const deleteBook = async (payload: string): Promise<BookType | null> => {
+  await Review.deleteMany({ bookId: payload })
+
   const result = await Book.findByIdAndDelete(payload)
   return result
 }

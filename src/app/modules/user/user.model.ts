@@ -32,7 +32,10 @@ const UserSchema = new Schema<UserType, UserModel>(
 )
 
 UserSchema.statics.isUserExist = async function (email: string) {
-  return await User.findOne({ email }, { _id: 1, email: 1, password: 1 })
+  return await User.findOne(
+    { email },
+    { _id: 1, email: 1, password: 1, role: 1 }
+  )
 }
 
 UserSchema.statics.isUserExistById = async function (id: string) {
