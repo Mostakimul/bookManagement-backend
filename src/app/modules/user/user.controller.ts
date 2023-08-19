@@ -73,23 +73,6 @@ const updateUser = catchAsync(async (req: Request, res: Response) => {
   })
 })
 /**
- * Update my profile controller
- */
-const updateMyProfile = catchAsync(async (req: Request, res: Response) => {
-  const id = req.user.id
-  const updatedData = req.body
-
-  const result = await UserService.updateMyProfile(id, updatedData)
-
-  sendResponse(res, {
-    success: true,
-    message: 'User profile updated successfully',
-    data: result,
-    statusCode: httpStatus.OK,
-  })
-})
-
-/**
  * Delete user controller
  */
 const deleteUser = catchAsync(async (req: Request, res: Response) => {
@@ -105,27 +88,9 @@ const deleteUser = catchAsync(async (req: Request, res: Response) => {
   })
 })
 
-/**
- * My profile  controller
- */
-const getMyProfile = catchAsync(async (req: Request, res: Response) => {
-  const userId = req.user.id
-
-  const result = await UserService.getMyProfile(userId)
-
-  sendResponse(res, {
-    success: true,
-    message: 'User profile fetched successfully',
-    data: result,
-    statusCode: httpStatus.OK,
-  })
-})
-
 export const UserController = {
   getAllUsers,
   getSingleUser,
   updateUser,
   deleteUser,
-  getMyProfile,
-  updateMyProfile,
 }

@@ -103,37 +103,6 @@ const updateUser = async (
   return result
 }
 /**
- * update My Profile user service
- */
-const updateMyProfile = async (
-  id: string,
-  payload: Partial<UserType>
-): Promise<UserType | null> => {
-  const isExist = await User.findOne({ _id: id })
-
-  if (!isExist) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'User not found')
-  }
-
-  const { name, ...userData } = payload
-
-  const updatedUserData: Partial<UserType> = { ...userData }
-
-  if (name && Object.keys(name).length > 0) {
-    Object.keys(name).forEach(key => {
-      const nameKey = `name.${key}` as keyof Partial<UserType>
-      ;(updatedUserData as any)[nameKey] = name[key as keyof typeof name]
-    })
-  }
-
-  const result = await User.findOneAndUpdate({ _id: id }, updatedUserData, {
-    new: true,
-  })
-
-  return result
-}
-
-/**
  * Delete user service
  */
 const deleteUser = async (payload: string): Promise<UserType | null> => {
@@ -141,23 +110,9 @@ const deleteUser = async (payload: string): Promise<UserType | null> => {
   return result
 }
 
-/**
- * my profile user service
- */
-const getMyProfile = async (id: string): Promise<UserType | null> => {
-  const isExist = await User.findOne({ _id: id })
-  if (!isExist) {
-    throw new ApiError(httpStatus.BAD_REQUEST, 'No profile found')
-  }
-
-  return isExist
-}
-
 export const UserService = {
   getAllUsers,
   getSingleUser,
   deleteUser,
   updateUser,
-  getMyProfile,
-  updateMyProfile,
 }
