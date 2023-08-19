@@ -2,6 +2,10 @@
 
 - https://book-managemnet.vercel.app/
 
+## Frontend repository link
+
+- [Book Management Github Repo](https://github.com/Mostakimul/bookManagement-frontend).
+
 # Application Routes:
 
 ### Auth
